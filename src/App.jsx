@@ -7,10 +7,10 @@ import $ from 'jquery'
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {text: "", data: []}
+        this.state = {text: "", data: [], expand: true}
     }
 
-    handleChange(event) {
+    handleChangeFilter(event) {
         this.setState({
             text: event.target.value
         });
@@ -23,24 +23,23 @@ class App extends Component {
             cache: false,
             success: function(data) {
                 this.setState({data: data.data});
-
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.url, status, err.toString());
-            }
+            }.bind(this)
         });
     }
 
     componentDidMount()  {
         this.loadCommentsFromServer();
-        setInterval(this.loadCommentsFromServer.bind(this), this.props.pollInterval);
+        //setInterval(this.loadCommentsFromServer.bind(this), this.props.pollInterval);
     }
 
   render() {
     return (
         <div>
-            <Input searchText={this.state.text} myEventHandler={this.handleChange.bind(this)} />
-            <FolderContainer searchText={this.state.text} data={this.state.data} />
+            <Input searchText={this.state.text} myEventHandler={this.handleChangeFilter.bind(this)} />
+            <FolderContainer view={this.state.expand} searchText={this.state.text} data={this.state.data} />
         </div>
     );
   }

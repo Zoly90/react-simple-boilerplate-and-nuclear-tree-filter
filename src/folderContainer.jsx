@@ -10,12 +10,12 @@ class TakeEverythingFromFolder extends Component {
 
         items.forEach(function (item) {
             if (item.type === 'folder') {
-                allFolderItems.push(<Folder name={item.name}/>);
+                allFolderItems.push(<Folder item={item} name={item.name}/>);
             } else {
                 allFolderItems.push(<File name={item.name}/>);
             }
 
-            if (item.children) {
+            if (item.children && item.expanded === true) {
                 allFolderItems.push(<TakeEverythingFromFolder data={item.children}/>);
             }
         });
@@ -32,9 +32,18 @@ class TakeEverythingFromFolder extends Component {
 }
 
 class FolderContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {shouldRerender: true};
+    }
+
+    handleChangeExpand(item) {
+        item.expanded = !item.expanded;
+        this.setState({shouldRerender: !this.state.shouldRerender});
+    }
 
     render() {
-        
+
         const items = this.props.data;
         let folderItems = [];
         const self = this;
@@ -42,12 +51,12 @@ class FolderContainer extends Component {
         if (this.props.searchText === "")
             items.forEach(function (item) {
                 if (item.type === 'folder') {
-                    folderItems.push(<Folder name={item.name}/>);
+                    folderItems.push(<Folder handleChangeExpand={self.handleChangeExpand.bind(self, item)} item={item} name={item.name}/>);
                 } else {
                     folderItems.push(<File name={item.name}/>);
                 }
 
-                if (item.children) {
+                if (item.children && item.expanded === true) {
                     folderItems.push(<FolderContainer searchText={self.props.searchText} data={item.children}/>);
                 }
             });
@@ -55,7 +64,7 @@ class FolderContainer extends Component {
         else {
             items.forEach(function (item) {
                     if (item.type === 'folder' && item.name.indexOf(self.props.searchText) > -1) {
-                        folderItems.push(<Folder name={item.name}/>);
+                        folderItems.push(<Folder  handleChangeExpand={self.handleChangeExpand.bind(self, item)} item={item} name={item.name}/>);
                         if (item.children) {
                             folderItems.push(<TakeEverythingFromFolder data={item.children}/>);
                         }
@@ -65,7 +74,7 @@ class FolderContainer extends Component {
                             folderItems.push(<File name={item.name}/>);
                         }
                         else {
-                            if (item.children) {
+                            if (item.children && item.expanded === true) {
                                 folderItems.push(<FolderContainer searchText={self.props.searchText}
                                                                   data={item.children}/>);
                             }
