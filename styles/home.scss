@@ -1,14 +1,44 @@
+body {
+  background: url("/styles/images/background-blue.jpg");
+}
+
+body .main  {
+  max-width: 650px;
+  margin: auto;
+}
+
+.main .title h1  {
+  text-align: center;
+  text-shadow: 0 2px 2px #E2F1E0;
+  color: #C1E7BD;
+  border-color: #61775E;
+  display:inline-block;
+  font-size: 48px;
+}
+
+.main .title img  {
+  width: 100px;
+  height: 100px;
+}
+
+.searching  {
+  margin-top: 10px;
+  margin-left: 20px;
+  font-size: 18px;
+  color: #C1E7BD;
+}
+
 .widget {
   padding: 18px;
   background-color: #fff;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 8px #E2F1E0, 0 1px 6px #E2F1E0;
 }
 
 .widget > input {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: 90%;
   min-height: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border: 0 none;
   border-bottom: 1px solid #ccc;
   outline: none;
@@ -24,6 +54,8 @@
 
 .file-item {
   background: transparent  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAsUlEQVQ4T2NkgIKE2q4DMDZW+j+jAgPj//0LmssSkeUZEQZ0/1/QXArnoxuSUNPdwMDIEMDwn2HDgpbSBpg8aQYw/H/PwMCQwMDIMHFBc9kCkCGkGODAwMAAwiBd9TDXYhiQUNtdwPCfgR97ePy7uKClfENCLcK7RLsA2UC8BoADi4HhP44YObigpfTAsHfBgMcC3vwAzze0TAcUuKDrAMN/RlwJCNVcRoaPC5pLA0CCALOMnRHTr6OKAAAAAElFTkSuQmCC') no-repeat left center;
+  font-size: 16px;
+  color: #C1E7BD;
 }
 
 .folder-item {
@@ -31,6 +63,8 @@
   font-weight: bold;
   vertical-align: text-bottom;
   background: transparent  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA6UlEQVQ4T62TvQ3CMBCF31OgDxPACGwATAAjeAOgSKpECgoCiRTABmYDNgA2yAawAUpNwiGHH0GBlATcuPH3vbPvTPy4+COPXKCCpY30sgORPIU6dLtF5FTeYgWgA2KtQ1fnQj8amQ2C81fJVcZ65sZUfhTr0GmrYN5iZjWLpIqwC0oLVjah8hd7WPUBsvQIwC4ieD9zFwgDELuyMCCHuwDcAliWFgg2jwoQgxxWEDzeICfZqSDoPa9QHjZpVq1B5UUnEIXa91GhSKKnrm3mQEqXngNyMNNqBKYD/QqSsQ6d1X8+U4X0F3IDjRRPOikDqHUAAAAASUVORK5CYII=') no-repeat left center;
+  font-size: 25px;
+  color: #C1E7BD;
 }
 
 .btnExpCol,
@@ -38,7 +72,13 @@
   margin-right: 30px;
   width: 15px;
   height: 15px;
-  //box-shadow:0 1px 2px #5e5d5b;
+  box-shadow:0 0 1px 2px #E2F1E0;
   text-align: center;
   padding: 0;
+}
+
+.magnifyingGlass  {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
 }

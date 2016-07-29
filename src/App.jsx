@@ -32,14 +32,49 @@ class App extends Component {
 
     componentDidMount()  {
         this.loadCommentsFromServer();
-        //setInterval(this.loadCommentsFromServer.bind(this), this.props.pollInterval);
+    }
+
+    filtering(items, string, self) {
+        let dontNeed = [], filteredList = [];
+
+        items.forEach(function (item) {
+            if (item.type === 'folder' && item.name.indexOf(string) > -1 && item.expanded === false) {
+                filteredList.push(item);
+            } else    {
+                if (item.type === 'folder' && item.name.indexOf(string) > -1 && item.expanded === true){
+                    filteredList.push(item);
+                    return filteredList;
+                    //self.filtering(item.children, self);
+                } else  {
+                    if (item.type === 'folder' && item.expanded === true) {
+                        dontNeed = self.filtering(item.children, string, self);
+                        dontNeed.forEach(function (something){
+                            filteredList.push(something);
+                        });
+                    } else  {
+                        if (item.type === 'file' && item.name.indexOf(string) > -1)
+                            filteredList.push(item);
+                    }
+                }
+            }
+        });
+
+        return filteredList;
     }
 
   render() {
+
+      let items = [];
+      if (this.state.text === ""){
+          items = this.state.data;
+      } else  {
+          items = this.filtering(this.state.data, this.state.text, this)
+      }
+      
     return (
         <div>
             <Input searchText={this.state.text} myEventHandler={this.handleChangeFilter.bind(this)} />
-            <FolderContainer view={this.state.expand} searchText={this.state.text} data={this.state.data} />
+            <FolderContainer searchText={this.state.text} data={items} />
         </div>
     );
   }

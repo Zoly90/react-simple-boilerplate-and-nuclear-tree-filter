@@ -12,6 +12,7 @@ class Input extends Component {
         return (
             <div>
                 <div className = 'widget'>
+                    <img src="./styles/images/magnifying-glass.png" className="magnifyingGlass" alt="Magnifying Glass"/>
                     <input
                         type="text"
                         placeholder="filter..."
@@ -19,7 +20,7 @@ class Input extends Component {
                         value={this.props.searchText}
                     />
                 </div>
-                <div>
+                <div className="searching">
                     {string} {this.props.searchText}
                 </div>
             </div>)
