@@ -10,17 +10,21 @@ const MainApp = React.createClass	({
 
 	getDataBindings(){
 		return{
-			initialTree: getters.filteredItems
+			data: getters.data,
+			value: getters.value
 		}
 	},
 
 	handleChange(event){
-         actions.setFilter(event);
+		reactor.observe(getters.value, (value) => {
+			this.setState(value);
+		});
+
+		actions.setFilter({value: event.target.value});
     },
 
 	componentDidMount() {
-		//debugger;
-		reactor.observe(getters.filteredItems, (data) => {
+		reactor.observe(getters.folders, (data) => {
 			this.setState(data);
 		});
 
@@ -30,12 +34,12 @@ const MainApp = React.createClass	({
 	render(){
 		return(
 			<div className="widget">
-				<Input filter={this.handleChange} />
-				<FolderContainer items={this.state.initialTree} />
+				<Input value={this.state.data.value} handleFilter={this.handleChange} />
+				<FolderContainer items={this.state.data.directories} />
 			</div>
 		);
 	}
 });
 
-MainApp.propTypes = {initialtree: React.PropTypes.object};
+MainApp.propTypes = {data: React.PropTypes.object};
 export default MainApp;

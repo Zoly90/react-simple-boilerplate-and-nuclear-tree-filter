@@ -1,60 +1,39 @@
 import {Store, toImmutable} from 'nuclear-js';
-import actions from './actionType.jsx'
+import ActionType from './actionType.jsx'
+import actions from './actions.jsx'
 
-const items = Store({
+const TreeStore = Store({
     getInitialState() {
         return toImmutable({
-            folders: [],
-            searchValue: ''
+            folders: actions.getData()
+            //searchValue: ''
         });
     },
 
     initialize() {
-        this.on(actions.FILTER, filtering);
-        this.on(actions.GET_DATA_SUCCESS, getDataSuccess);
-        this.on(actions.GET_DATA_ERROR, getDataError);
+        debugger;
+        this.on(ActionType.FILTER, filter);
+        this.on(ActionType.GET_DATA_SUCCESS, getDataSuccess);
+        this.on(ActionType.GET_DATA_ERROR, getDataError);
     }
 });
 
-export default items;
+export default TreeStore;
 
-var folders = [];
+function filter(state, payload) {
+    const nextState = state.set('value', payload.value);
 
-function filtering(items, string, self) {
-    let dontNeed = [], filteredList = [];
+    if (state.equals(nextState))  {
+        return state;
+    }
 
-    items.forEach(function (item) {
-        if (item.type === 'folder' && item.name.indexOf(string) > -1) {
-            filteredList.push(item);
-        } else    {
-            if (item.type === 'folder' && item.name.indexOf(string) > -1){
-                filteredList.push(item);
-                return filteredList;
-            } else  {
-                if (item.type === 'folder') {
-                    dontNeed = self.filtering(item.children, string, self);
-                    dontNeed.forEach(function (something){
-                        filteredList.push(something);
-                    });
-                } else  {
-                    if (item.type === 'file' && item.name.indexOf(string) > -1)
-                        filteredList.push(item);
-                }
-            }
-        }
-    });
-
-    return toImmutable(filteredList);
+    return nextState;
 }
 
 function getDataSuccess(state, payload){
-    console.log(payload);
     return state.set('folders', toImmutable(payload.data));
 }
 
 function getDataError(){
     return "ERROR";
 }
-
-// items = data;
-// folders = data;
